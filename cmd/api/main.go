@@ -9,5 +9,6 @@ func main(){
 	app := &application{
 		config: conf,
 	}
-	log.Fatal(app.run())
+	mo := app.mount()
+	log.Fatal(app.run(mo))
 }
