@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -9,7 +9,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-type application struct{
+type application struct {
 	config config
 }
 
@@ -17,7 +17,7 @@ type config struct{
 	addr string
 }
 
-func (app *application) mount() http.Handler{
+func (app *application) mount() http.Handler {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/health", app.healthCheckHandler)
@@ -32,6 +32,6 @@ func (app *application) run(mux http.Handler) error{
 		ReadTimeout: time.Second * 10,
 		IdleTimeout: time.Minute,
 	}
-	log.Println("starting the server on port", app.config.addr)
+	fmt.Printf("running server on port%v", app.config.addr)
 	return srv.ListenAndServe()
 }
